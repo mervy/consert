@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="robots" content="noindex, nofollow" />
+        <title>CONSERTI - Sistema de Controle de Ordem de Serviços</title>
+        <script src="/web_files/js/jquery-2.1.0.min.js"></script>
+        <script src="/web_files/js/jquery-ui-1.10.3.custom.min.js"></script>       
+        <script src="/web_files/js/jquery.maskedinput.min.js"></script>   
+        <script src="/web_files/js/jquery.validate.min.js"></script>   
+        <script src="/web_files/js/jquery.tablesorter.min.js"></script>  
+        <script src="/web_files/js/modernizr.custom.js"></script> 
+        <script src="/web_files/js/funcoes.js"></script>   
+        <link href='http://fonts.googleapis.com/css?family=Faster+One' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="/web_files/css/admin.css" />
+        <link rel="stylesheet" type="text/css" href="/web_files/css/ui-lightness/jquery-ui-1.10.3.custom.min.css" />
+        <?php require_once 'web_files/marketing/ga_conserti.php';?>
+    </head>
+    <body>
+        <header>           
+            <h1>Conserti</h1>
+            <p>Sistema de Controle de Ordem de Serviços</p><br />       
+        </header>
+        <nav>                
+            <ul>
+                <li<?= ($this->_action == 'home') ? " class='current'" : "" ?>><a href="/admin/home/">Início</a></li>
+                <li<?= ($this->_action == 'cadastros') ? " class='current'" : "" ?>><a href="/admin/cadastros/">Cadastros</a></li>
+                <li<?= ($this->_action == 'ordens') ? " class='current'" : "" ?>><a href="/admin/ordens/">Ordem de Serviços</a></li>
+                <li><a href="#">Livros</a>
+                    <ul>
+                        <li <?= ($this->_action == 'relatorios') ? " class='current'" : "" ?>><a href="/admin/relatorios/">Relatorios</a></li>
+                        <li<?= ($this->_action == 'livro_controle') ? " class='current'" : "" ?>><a href="/admin/livro_controle/">Controle de ordens geradas</a></li>
+                        <li<?= ($this->_action == 'liro_ordens') ? " class='current'" : "" ?>><a href="/admin/livro_ordens/">Listar todas as ordens geradas</a></li>
+                        <li<?= ($this->_action == 'livro_baixas') ? " class='current'" : "" ?>><a href="/admin/livro_baixas/">Baixar ordens cumpridas</a></li>                                                   
+                    </ul>
+                </li>                            
+                <li><a href="/admin/logout">Sair</a></li>
+            </ul>                
+        </nav>
+        <?php if (isset($_SESSION['userData']['nome'])): ?>
+            <h4 id="usuario">
+                |:::| Usuário: <?= $_SESSION['userData']['nome'] ?> (<?= $_SESSION['userData']['funcao'] ?>) 
+                |:::| Nível de acesso: <span style="color:red;"><?= $_SESSION['userData']['nivel'] ?></span>
+            </h4>
+        <?php endif; ?>

@@ -1,0 +1,100 @@
+<article>   
+    <?php
+    switch ($view_secao) {
+        case 'setores':
+            ?>
+            <p>Editando dados de <?= ucfirst($view_secao) ?></p>
+            <form class="opcoes" action='/admin/editar/secao/<?= ($view_secao) ?>/id/<?= ($view_id) ?>/do/action' method="POST">
+                <p><label>Setor: </label><input type="text" name="setor" value="<?= $view_dados['setor'] ?>" size="70"/></p>        
+                <p style="text-align: right"><input type="submit" value='Alterar' name="alterar" /></p>
+            </form>        
+            <?php
+            break;
+        case 'filiais':
+            ?>
+            <p>Editando dados de <?= ucfirst($view_secao) ?></p>
+            <form class="opcoes" action='/admin/editar/secao/<?= ($view_secao) ?>/id/<?= ($view_id) ?>/do/action' method="POST">
+                <p><label>Filial: </label><input type="text" name="filial" value="<?= $view_dados['filial'] ?>" size="70"/></p>                
+                <p><label>CNPJ: </label><input type="text" name="cnpj" value="<?= $view_dados['cnpj'] ?>" size="40" id="cnpj"/></p> 
+                <p><label>Endereço: </label><br /><textarea name="endereco" rows="5" cols="50"><?= $view_dados['endereco'] ?></textarea></p>
+                <p><label>Telefone: </label><input type="text" name="telefone" value="<?= $view_dados['telefone'] ?>" size="40" id="telefone"/></p> 
+                <p style="text-align: right"><input type="submit" value='Alterar' name="alterar" /></p>
+            </form> 
+            <?php
+            break;
+        case 'suportes':
+            ?>
+            <p>Editando dados de <?= ucfirst($view_secao) ?></p>
+            <form class="opcoes" action='/admin/editar/secao/<?= ($view_secao) ?>/id/<?= ($view_id) ?>/do/action' method="POST">
+                <p><label>Área de suporte: </label><input type="text" name="area" value="<?= $view_dados['area'] ?>" size="70"/></p>        
+                <p style="text-align: right"><input type="submit" value='Alterar' name="alterar" /></p>
+            </form>        
+            <?php
+            break;
+        case 'servicos':
+            ?>
+            <p>Editando dados de <?= ucfirst($view_secao) ?></p>
+            <form class="opcoes" action='/admin/editar/secao/<?= ($view_secao) ?>/id/<?= ($view_id) ?>/do/action' method="POST">
+                <p><label>Setor: </label><input type="text" name="servico" value="<?= $view_dados['servico'] ?>" size="70"/></p>        
+                <p style="text-align: right"><input type="submit" value='Alterar' name="alterar" /></p>
+            </form>        
+            <?php
+            break;
+        case 'funcionarios':
+            ?>
+            <p>Editando dados de <?= ucfirst($view_secao) ?></p>
+            <form class="opcoes" action='/admin/editar/secao/<?= ($view_secao) ?>/id/<?= ($view_id) ?>/do/action' method="POST">
+                <p><label>Nome: </label><input type="text" name="nome" value="<?= $view_dados['nome'] ?>" size="70"/></p>
+                <p><label>Função: </label><input type="text" name="funcao" value="<?= $view_dados['funcao'] ?>" size="70"/></p>
+                <p><label>Email: </label><input type="text" name="email" value="<?= $view_dados['email'] ?>" size="50"/></p>                         
+                <p><label>Áreas de suporte: </label><input type="text" name="areas" value="<?= $view_dados['suportes'] ?>" size="50"/></p>
+                <p><label>Filiais que atua: </label><input type="text" name="filiais" value="<?= $view_dados['filiais'] ?>" size="50"/> 
+                    <div id='mostrada'>
+                    <a href='#'>[Inserir como: 1,2,3,4,5]</a>
+                    <div id="sera-mostrada">
+                       <pre>
+1 - Filial 01 - Super Alli Saldanha
+2 - Filial 02 - Super Alli XV de Novembro
+3 - Filial 03 - Super Alli Aeroporto
+4 - Filial 04 - Super Alli Palmeirinha
+5 - Filial 05 - Super Alli Entre Rios
+                       </pre>
+                   </div>
+                </div>                
+                </p>           
+                <p><label>Afastamento: </label>    
+                    <input name="afastamento" type="radio" value="Sim">Sim
+                    <input name="afastamento" type="radio" value="Não" checked>Não   
+                </p>
+                <p><label>Motivo do afastamento: </label><input type="text" name="motivo_afastamento" value="<?= $view_dados['motivo_afastamento'] ?>" size="50"/></p>
+                <p><label>Data do afastamento: </label><input type="text" class="calendario data" name="data_afastamento" value="<?= date("d-m-Y", strtotime($view_dados['data_afastamento'])) ?>" />
+                    [Use o calendário!!]</p>
+                <p><label>Data do retorno: </label><input type="text" class="calendario data" name="data_retorno" value="<?= date("d-m-Y",strtotime($view_dados['data_retorno'])) ?>" /> 
+                    [Use o calendário!!]</p>
+                <p style="text-align: right"><input type="submit" value='Alterar' name="alterar" /></p>
+            </form>              
+            <?php
+            break;
+        case 'usuarios':
+            ?>
+            <p>Editando dados de <?= ucfirst($view_secao) ?></p>
+            <form class="opcoes" action='/admin/editar/secao/<?= ($view_secao) ?>/id/<?= ($view_id) ?>/do/action' method="POST">
+                <p><label>Login: </label><input type="text" name="login" value="<?= $view_dados['login'] ?>" size="40"/></p>
+                <p><label>Nome: </label><input type="text" name="nome" value="<?= $view_dados['nome'] ?>" size="70"/></p>
+                <p><label>Função: </label><input type="text" name="funcao" value="<?= $view_dados['funcao'] ?>" size="70"/></p>
+                <p><label>Senha:</label><input type="password" name="senha" value="" size="50"/></p>
+                <p><label>Nível: </label>    
+                    <input name="nivel" type="radio" value="1" <?= ($view_dados['nivel'] == "1") ? "checked" : "" ?>>1 (um) - Básico
+                    <input name="nivel" type="radio" value="2" <?= ($view_dados['nivel'] == "2") ? "checked" : "" ?>>2 (dois) - Intermediário
+                    <input name="nivel" type="radio" value="3" <?= ($view_dados['nivel'] == "3") ? "checked" : "" ?>>3 (três) - Avançado                    
+                </p>
+                <p><label>Status: </label>    
+                    <input name="status" type="radio" value="ativo" <?= ($view_dados['status'] == "ativo") ? "checked" : "" ?>>Ativo
+                    <input name="status" type="radio" value="inativo" <?= ($view_dados['status'] == "inativo") ? "checked" : "" ?>>Inativo                                       
+                </p>                
+                <input type="hidden" name="data" value="<?= date("Y-m-d") ?>"/>               
+                <p style="text-align: right"><input type="submit" value='Alterar' name="alterar" /></p>
+            </form>                 
+
+    <?php } ?>
+</article>

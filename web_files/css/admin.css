@@ -1,0 +1,104 @@
+* {paddin: 0; margin: 0;}
+body {width: 80%; margin: 0 auto; }
+header{ 
+    width: 100%;
+    background-image: url('banner.png');
+    background-repeat: repeat-x;
+    height: auto;   
+}
+header h1 {
+    text-indent: 10%;
+    color:  brown;
+    font-family: 'Faster One', cursive;
+    font-size: 4em;
+}
+header p{font-size: 1.4em; color: navy; text-indent: 15%;}
+footer{text-align: center; background-image: url('fundo_footer.png');}
+#separator{margin: 20px 0 20px 0;}
+footer{height: 60px;}
+footer p{padding-top: 20px;}
+
+.obrigatorio {background: moccasin}
+#usuario{
+    background:  #cccccc;
+    text-align: left; padding: 0 auto; margin: 0 auto; clear:both;}
+article, h4 {
+    width: 80%;
+    padding: 5px auto;
+    margin: 0 auto;        
+}
+article h1{
+    margin: 20px 0 20px 0;
+}
+p {margin: 15px 0 10px 0;}
+a {text-decoration: none;}
+a:hover{
+    color: navy;
+}
+form{
+    margin: 5px 5px 5px 5px;
+}
+input {
+    margin-top:10px;
+}
+#gerenciar {
+    padding: 10px 0 10px 0;
+}
+#gerenciar li{
+    display: inline;
+    padding-left: 15px;
+    background:  khaki;
+}
+caption {    
+    text-align: left;
+    margin: 25px 0 10px 0;    
+    color:  #cd0a0a;
+}
+
+/* MENU DropDown
+ * http://thegoodarticle.com/nova-versao-do-menu-drop-down/
+ */
+nav {
+    text-align: center;
+    background: lightgray;
+    margin: 5px 0 15px 0;
+}
+
+nav a {text-decoration: none; color: black; font-size: 110%;}
+nav a:hover{color: white;}
+
+nav ul {      
+    padding: 0;  
+    margin: 0;  
+    list-style: none; 
+}
+nav ul li {      
+    display: inline-block;      
+    margin-right: 1px;     
+    position: relative;
+}
+nav ul li a { 
+    display: block; 
+    margin: 0;
+    padding: 5px 15px;       
+    text-decoration: none;     
+}
+nav ul li ul {  
+    display: none; 
+    text-align: left;
+    width: 240px;
+    float: none;    
+    position: absolute;  
+    top: 100%;
+    left: 0;    
+}
+nav ul li:hover > ul, nav ul li:focus > ul {  
+    display: block;
+    background: #eee;
+    color: white;
+}
+.current a {color: sienna}
+/*Mostrar dica no view adminCadastrar.phtml - funcionários */
+#mostrada {position:absolute; margin-left: 27%; margin-top: -32px;}
+#mostrada #sera-mostrada{display:none}
+#mostrada:hover #sera-mostrada{display:block; background: lightgoldenrodyellow; border: solid 1px #c77405}

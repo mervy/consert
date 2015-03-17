@@ -1,0 +1,69 @@
+<article>
+    <h1>Baixa de ordem de serviços</h1> 
+    <?php if ($view_id): ?>
+        <form action='/admin/livro_baixas/id/<?= $view_id ?>/do/action' method='POST'>
+            <p>
+                <label>Insira a data da baixa: </label><br>              
+                <input type='text' class="calendario" name='data' value='' />            
+            </p>
+            <p>
+                <input type='submit' value='Baixar' name='buscar' />
+            </p>
+        </form>
+    <?php else: ?>
+        <form action='' method='POST'>
+            <p>
+                <label>Insira a ordem desejada ou a data:</label><br>
+                Exemplos: Ordem: 1, 10, 250; Data: 01/01/2014, 25/10/2014)<br>
+                <input type='text' name='busca' value='' />            
+            </p>
+            <p>
+                <input type='submit' value='Buscar' name='buscar' />
+            </p>
+        </form>
+    <?php
+    endif;
+    if (@$_POST['busca']):
+        if ($view_sql != null):
+            ?>         
+            <table class="myTable" border="1">
+                <caption><h3>Últimas ordens de serviço expedidas</h3></caption>
+                <thead>
+                <th>Ordem</th>        
+                <th>Data de entrega</th>
+                <th>Área do suporte</th>
+                <th>Setor atendido</th>
+                <th>Tipo de Serviço</th>
+                <th>Funcionário</th>
+                <th>Filial atendida</th>
+                <th>Baixa</th>
+                <th>Baixar</th>               
+                </thead>
+                <?php foreach ($view_sql as $dados): ?>
+                    <tr>
+                        <td><?= $dados['id'] ?></td>              
+                        <td><?= date('d/m/Y', strtotime($dados['data_suporte'])) ?></td>
+                        <td><?= $dados['area'] ?></td>
+                        <td><?= $dados['setor'] ?></td>
+                        <td><?= $dados['servico'] ?></td>
+                        <td><?= $dados['nome_func'] ?></td>
+                        <td><?= $dados['filial'] ?></td>
+                        <td><?= $dados['baixa_suporte'] ?></td>
+                        <td><a href="/admin/livro_baixas/id/<?= $dados['id'] ?>">Clique aqui</a></td>   
+
+                    </tr>
+                <?php endforeach; ?>
+            </table>         
+            <?php
+        else:
+            echo "<script type=\"text/JavaScript\">
+                      alert(\"Ordem de serviço já baixada!\")
+                      window.history.back();
+                 </script>";
+        endif;
+    endif;
+    ?>
+
+
+
+</article>

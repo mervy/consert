@@ -1,0 +1,60 @@
+<article>    
+    <h1>Bem vindo ao CONSERTI</h1>
+    <table class="myTable" border="1">
+        <caption><h3>Lista de funcionários afastados</h3></caption>
+        <thead>
+        <th>Funcionário</th>
+        <th>Motivo</th>
+        <th>Saída</th>
+        <th>Retorno</th>
+        <th>Prazo (dias)</th>
+        </thead>
+        <?php foreach ($view_sql as $dados): ?>
+            <tr>
+                <td><?= $dados['nome'] ?></td>
+                <td><?= $dados['motivo_afastamento'] ?></td>
+                <td><?php
+                    $dAfast = new DateTime($dados['data_afastamento']);
+                    echo $dAfast->format('d/m/Y')
+                    ?></td>
+                <td><?php
+                    $dRetorno = new DateTime($dados['data_retorno']);                   
+                    echo ($dados['data_retorno'] <= date('Y-m-d')) ?
+                            "<script type=\"text/JavaScript\">
+                       alert(\"O funcionário " . $dados['nome'] . " voltou do afastamento. Altere seu status!!\");                       
+                  </script>" : $dRetorno->format('d/m/Y')
+                    ?></td>       
+                <td align="center"><?= (int) floor((strtotime($dados['data_retorno']) - strtotime($dados['data_afastamento']) ) / (60 * 60 * 24)); ?></td> 
+
+            </tr>
+<?php endforeach; ?>
+    </table>
+
+    <table class="myTable" border="1">
+        <caption><h3>Últimas ordens de serviço expedidas</h3></caption>
+        <thead>
+        <th>Ordem</th>
+        <th>Trabalho a ser realizado</th>
+        <th>Data de entrega</th>
+        <th>Área do suporte</th>
+        <th>Setor atendido</th>
+        <th>Tipo de Serviço</th>
+        <th>Funcionário</th>
+        <th>Filial atendida</th>
+        <th>Reimprimir Ordem</th>
+        </thead>
+<?php foreach ($view_ordens as $dados): ?>
+            <tr>
+                <td><?= $dados['id'] ?></td>
+                <td><?= $dados['resumo'] ?></td>
+                <td><?= date('d/m/Y', strtotime($dados['data_suporte'])) ?></td>
+                <td><?= $dados['area'] ?></td>
+                <td><?= $dados['setor'] ?></td>
+                <td><?= $dados['servico'] ?></td>
+                <td><?= $dados['nome'] ?></td>
+                <td><?= $dados['filial'] ?></td>
+                <td><a href="/web_files/ordens/<?= $dados['id'] ?>.html" target="_blank">Imprimir</a></td>
+            </tr>
+<?php endforeach; ?>
+    </table>
+</article>

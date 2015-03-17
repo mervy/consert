@@ -1,0 +1,419 @@
+<article>
+    <h1>Relatórios</h1>
+    <p>
+    <ul>
+        <li><a href="/admin/relatorios/tipo/pordia/">Relatórios por dia</a></li>
+        <li><a href="/admin/relatorios/tipo/porintervalodedatas/">Relatórios por intervalo de datas</a></li>
+        <li><a href="/admin/relatorios/tipo/pormes/">Relatórios por mês</a></li>
+        <li><a href="/admin/relatorios/tipo/porano/">Relatórios por ano</a></li>
+    </ul>
+</p>
+
+<form action="" method="POST">       
+    <?php
+    switch ($view_tipo):
+        case 'pordia';
+            ?>                
+            <h3>Relatórios por data</h3>
+            <p>Insira a data:<br />
+                <input type="text" class="calendario" name="porDia" value="<?php echo (@$_POST['porDia'] != null) ? @$_POST['porDia'] : ""; ?>"> [Use o calendário!!]
+            </p>
+            <?php
+            break;
+        case 'porintervalodedatas':
+            ?>
+            <h3>Relatórios por intervalos de data</h3>
+            <p>Insira a data inicial:<br />
+                <input type="text" class="calendario" name="dataInicial" value="<?php echo (@$_POST['dataInicial'] != null) ? @$_POST['dataInicial'] : ""; ?>"> [Use o calendário!!]</p>
+            <p>Insira a data final:<br />
+                <input type="text" class="calendario" name="dataFinal" value="<?php echo (@$_POST['dataFinal'] != null) ? @$_POST['dataFinal'] : ""; ?>"> [Use o calendário!!]</p>
+                <?php
+                break;
+            case 'pormes':
+                ?>
+            <h3>Relatórios por mês</h3>               
+            <p>Insira o mês desejado: <br /> 
+                <input type="text" name="mes" value="<?php echo (@$_POST['mes'] != null) ? @$_POST['mes'] : ""; ?>">[Exemplo: março: 03, outubro: 10]</p>
+            <p>Insira o ano: <br />
+                <input type="text" name="mesAno" value="<?php echo (@$_POST['mesAno'] != null) ? @$_POST['mesAno'] : ""; ?>"></p>   
+            <?php
+            break;
+        case 'porano':
+            ?>
+            <h3>Relatórios por ano</h3>
+            <p>Insira o ano: <br />
+                <input type="text" name="ano" value="<?php echo (@$_POST['ano'] != null) ? $_POST['ano'] : ""; ?>">  [Formato: 2013]</p> 
+            <?php
+            break;
+            ?>
+    <?php endswitch; ?>     
+
+    <?php if ($view_tipo): ?>      
+        <p>Selecione o relatório desejado:</p>
+        <select name="tipoRelatorio">
+            <option value="ordensFunc">Ordens por funcionários</option>
+            <option value="ordensFiliais">Ordens por filiais</option>   
+            <option value="ordensSetores">Ordens por setores</option>   
+            <option value="ordensSuportes">Ordens por tipo de suporte</option>
+            <option value="ordensServicos">Ordens por serviços</option>
+        </select>
+        <input type="submit" value="Gerar" name="relatorio">
+    <?php endif; ?>
+</form>
+<?php
+if (@$_POST['relatorio']) {
+    if ($view_sql != null) {
+      //  print_r($view_sql);
+
+        switch ($view_tipo) {
+            case 'pordia':
+                echo "<table width=\"60%\" class=\"myTable\">
+                    <caption>Total de ordens de serviço retiradas em " . @$_POST['porDia'] . "</caption>";
+                switch ($_POST['tipoRelatorio']) {
+                    case 'ordensFunc':
+                        echo "<thead>              
+                    <th>Funcionário</th>
+                    <th align='center'>Total</th>";
+                        $results = array();
+                        foreach ($view_sql as $d) {
+                            if (array_key_exists($d['nome_func'], $results)) {
+                                $results[$d['nome_func']] ++;
+                            } else {
+                                $results[$d['nome_func']] = 1;
+                            }
+                        }
+                        break;
+                     case 'ordensFiliais':
+                        echo "<thead>              
+                    <th>Filial</th>
+                    <th align='center'>Total</th>";
+                        $results = array();
+                        foreach ($view_sql as $d) {
+                            if (array_key_exists($d['filial'], $results)) {
+                                $results[$d['filial']] ++;
+                            } else {
+                                $results[$d['filial']] = 1;
+                            }
+                        }
+                        break;
+                    case 'ordensSetores':
+                        echo "<thead>              
+                    <th>Setor</th>
+                    <th align='center'>Total</th>";
+                        $results = array();
+                        foreach ($view_sql as $d) {
+                            if (array_key_exists($d['setor'], $results)) {
+                                $results[$d['setor']] ++;
+                            } else {
+                                $results[$d['setor']] = 1;
+                            }
+                        }
+                        break;
+                    case 'ordensSuportes':
+                        echo "<thead>              
+                    <th>Tipo de Suporte</th>
+                    <th align='center'>Total</th>";
+                        $results = array();
+                        foreach ($view_sql as $d) {
+                            if (array_key_exists($d['area'], $results)) {
+                                $results[$d['area']] ++;
+                            } else {
+                                $results[$d['area']] = 1;
+                            }
+                        }
+                        break;
+                    case 'ordensServicos':
+                        echo "<thead>              
+                    <th>Serviço</th>
+                    <th align='center'>Total</th>";
+                        $results = array();
+                        foreach ($view_sql as $d) {
+                            if (array_key_exists($d['servico'], $results)) {
+                                $results[$d['servico']] ++;
+                            } else {
+                                $results[$d['servico']] = 1;
+                            }
+                        }
+                        break;
+                }
+                foreach ($results as $key => $value) {
+                    echo "<tr>
+                    <td>$key</td>
+                    <td align='center'>$value</td>
+                </tr>";
+                }
+                echo "
+                 <tr>
+                 <td><b>Total</b></td>
+                 <td align='center'><b>" . count($view_sql) . "</b></td>
+            </table>";
+
+
+
+                break;
+            /*
+             * **********************************************************************
+             */
+            case 'porintervalodedatas':
+                echo "<table width=\"60%\" class=\"myTable\">
+                    <caption>Total de ordens de serviço retiradas 
+                    do dia " . date("d/m/Y", strtotime(@$_POST['dataInicial'])) . " inclusive,
+                        até o dia " . date("d/m/Y", strtotime(@$_POST['dataFinal'])) . ", inclusive
+                        </caption>";
+                switch (@$_POST['tipoRelatorio']) {
+                    case 'ordensFunc':
+                        echo "<thead>              
+                    <th>Funcionário</th>
+                    <th align='center'>Total</th>";
+                        $results = array();
+                        foreach ($view_sql as $d) {
+                            if (array_key_exists($d['nome_func'], $results)) {
+                                $results[$d['nome_func']] ++;
+                            } else {
+                                $results[$d['nome_func']] = 1;
+                            }
+                        }
+                        break;
+                    case 'ordensFiliais':
+                        echo "<thead>              
+                    <th>Filial</th>
+                    <th align='center'>Total</th>";
+                        $results = array();
+                        foreach ($view_sql as $d) {
+                            if (array_key_exists($d['filial'], $results)) {
+                                $results[$d['filial']] ++;
+                            } else {
+                                $results[$d['filial']] = 1;
+                            }
+                        }
+                        break;
+                    case 'ordensSetores':
+                        echo "<thead>              
+                    <th>Setor</th>
+                    <th align='center'>Total</th>";
+                        $results = array();
+                        foreach ($view_sql as $d) {
+                            if (array_key_exists($d['setor'], $results)) {
+                                $results[$d['setor']] ++;
+                            } else {
+                                $results[$d['setor']] = 1;
+                            }
+                        }
+                        break;
+                    case 'ordensSuportes':
+                        echo "<thead>              
+                    <th>Tipo de Suporte</th>
+                    <th align='center'>Total</th>";
+                        $results = array();
+                        foreach ($view_sql as $d) {
+                            if (array_key_exists($d['area'], $results)) {
+                                $results[$d['area']] ++;
+                            } else {
+                                $results[$d['area']] = 1;
+                            }
+                        }
+                        break;
+                    case 'ordensServicos':
+                        echo "<thead>              
+                    <th>Serviço</th>
+                    <th align='center'>Total</th>";
+                        $results = array();
+                        foreach ($view_sql as $d) {
+                            if (array_key_exists($d['servico'], $results)) {
+                                $results[$d['servico']] ++;
+                            } else {
+                                $results[$d['servico']] = 1;
+                            }
+                        }
+                        break;
+                }
+                foreach ($results as $key => $value) {
+                    echo "<tr>
+                    <td>$key</td>
+                    <td align='center'>$value</td>
+                </tr>";
+                }
+                echo "
+                 <tr>
+                 <td><b>Total</b></td>
+                 <td align='center'><b>" . count($view_sql) . "</b></td>
+            </table>";
+                break;
+            /*
+             * **********************************************************************
+             */
+            case 'pormes':
+                echo "<table width=\"60%\" class=\"myTable\">
+                    <caption>Total de ordens de serviço retiradas em " . @$_POST['mes'] . "</caption>";
+                switch (@$_POST['tipoRelatorio']) {
+                    case 'ordensFunc':
+                        echo "<thead>              
+                    <th>Funcionário</th>
+                    <th align='center'>Total</th>";
+                        $results = array();
+                        foreach ($view_sql as $d) {
+                            if (array_key_exists($d['nome_func'], $results)) {
+                                $results[$d['nome_func']] ++;
+                            } else {
+                                $results[$d['nome_func']] = 1;
+                            }
+                        }
+                        break;
+                     case 'ordensFiliais':
+                        echo "<thead>              
+                    <th>Filial</th>
+                    <th align='center'>Total</th>";
+                        $results = array();
+                        foreach ($view_sql as $d) {
+                            if (array_key_exists($d['filial'], $results)) {
+                                $results[$d['filial']] ++;
+                            } else {
+                                $results[$d['filial']] = 1;
+                            }
+                        }
+                        break;
+                    case 'ordensSetores':
+                        echo "<thead>              
+                    <th>Setor</th>
+                    <th align='center'>Total</th>";
+                        $results = array();
+                        foreach ($view_sql as $d) {
+                            if (array_key_exists($d['setor'], $results)) {
+                                $results[$d['setor']] ++;
+                            } else {
+                                $results[$d['setor']] = 1;
+                            }
+                        }
+                        break;
+                    case 'ordensSuportes':
+                        echo "<thead>              
+                    <th>Tipo de Suporte</th>
+                    <th align='center'>Total</th>";
+                        $results = array();
+                        foreach ($view_sql as $d) {
+                            if (array_key_exists($d['area'], $results)) {
+                                $results[$d['area']] ++;
+                            } else {
+                                $results[$d['area']] = 1;
+                            }
+                        }
+                        break;
+                    case 'ordensServicos':
+                        echo "<thead>              
+                    <th>Serviço</th>
+                    <th align='center'>Total</th>";
+                        $results = array();
+                        foreach ($view_sql as $d) {
+                            if (array_key_exists($d['servico'], $results)) {
+                                $results[$d['servico']] ++;
+                            } else {
+                                $results[$d['servico']] = 1;
+                            }
+                        }
+                        break;
+                }
+                foreach ($results as $key => $value) {
+                    echo "<tr>
+                    <td>$key</td>
+                    <td align='center'>$value</td>
+                </tr>";
+                }
+                echo "
+                 <tr>
+                 <td><b>Total</b></td>
+                 <td align='center'><b>" . count($view_sql) . "</b></td>
+            </table>";
+                break;
+            /*
+             * **********************************************************************
+             */
+
+            case 'porano':
+                echo "<table width=\"60%\" class=\"myTable\">
+                    <caption>Total de ordens de serviço retiradas no ano de " . @$_POST['ano'] . "</caption>";
+                switch (@$_POST['tipoRelatorio']) {
+                    case 'ordensFunc':
+                        echo "<thead>              
+                    <th>Funcionário</th>
+                    <th align='center'>Total</th>";
+                        $results = array();
+                        foreach ($view_sql as $d) {
+                            if (array_key_exists($d['nome_func'], $results)) {
+                                $results[$d['nome_func']] ++;
+                            } else {
+                                $results[$d['nome_func']] = 1;
+                            }
+                        }
+                        break;
+                    case 'ordensFiliais':
+                        echo "<thead>              
+                    <th>Filial</th>
+                    <th align='center'>Total</th>";
+                        $results = array();
+                        foreach ($view_sql as $d) {
+                            if (array_key_exists($d['filial'], $results)) {
+                                $results[$d['filial']] ++;
+                            } else {
+                                $results[$d['filial']] = 1;
+                            }
+                        }
+                        break;
+                    case 'ordensSetores':
+                        echo "<thead>              
+                    <th>Setor</th>
+                    <th align='center'>Total</th>";
+                        $results = array();
+                        foreach ($view_sql as $d) {
+                            if (array_key_exists($d['setor'], $results)) {
+                                $results[$d['setor']] ++;
+                            } else {
+                                $results[$d['setor']] = 1;
+                            }
+                        }
+                        break;
+                    case 'ordensSuportes':
+                        echo "<thead>              
+                    <th>Tipo de Suporte</th>
+                    <th align='center'>Total</th>";
+                        $results = array();
+                        foreach ($view_sql as $d) {
+                            if (array_key_exists($d['area'], $results)) {
+                                $results[$d['area']] ++;
+                            } else {
+                                $results[$d['area']] = 1;
+                            }
+                        }
+                        break;
+                    case 'ordensServicos':
+                        echo "<thead>              
+                    <th>Serviço</th>
+                    <th align='center'>Total</th>";
+                        $results = array();
+                        foreach ($view_sql as $d) {
+                            if (array_key_exists($d['servico'], $results)) {
+                                $results[$d['servico']] ++;
+                            } else {
+                                $results[$d['servico']] = 1;
+                            }
+                        }
+                        break;
+                }
+                foreach ($results as $key => $value) {
+                    echo "<tr>
+                    <td>$key</td>
+                    <td align='center'>$value</td>
+                </tr>";
+                }
+                echo "
+                 <tr>
+                 <td><b>Total</b></td>
+                 <td align='center'><b>" . count($view_sql) . "</b></td>
+            </table>";
+                break;
+        }
+    } else {
+        echo "<p>Sem dados para exibir!!!</p>";
+    }
+}
+?>
+</article>

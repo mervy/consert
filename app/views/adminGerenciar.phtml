@@ -1,0 +1,151 @@
+<article>
+    <p>Tabela de <?= $view_secao ?></p>
+    <table class="myTable" border="1" width="100%">
+        <?php
+        switch ($view_secao):
+            case "setores":
+                ?><thead style="text-align: center">
+                <th>Id</th>
+                <th>Setor</th>                   
+                <th>Editar</th>
+                <th>Deletar</th>                    
+                </thead>
+                <?php foreach ($view_sql as $sql): ?>
+                    <tr>
+                        <td><?= $sql['id'] ?></td>
+                        <td><?= $sql['setor'] ?></td>
+                        <td><a href="/admin/editar/secao/<?= $view_secao ?>/id/<?= $sql['id'] ?>">Editar</a></td>
+                        <td><a href="/admin/deletar/secao/<?= $view_secao ?>/id/<?= $sql['id'] ?>"                                
+                               onclick="return confirm('Confirma a exclusão do registro?')">Deletar</a></td>                    
+                    </tr>
+                    <?php
+                endforeach;
+                break;
+            case "filiais":
+                ?> 
+                <thead style="text-align: center">
+                <th>Id</th>
+                <th>Filial</th> 
+                <th>CNPJ</th>  
+                <th>Endereço</th>  
+                <th>Telefone</th> 
+                <th>Editar</th>
+                <th>Deletar</th>                    
+                </thead>
+                <?php foreach ($view_sql as $sql): ?>
+                    <tr>
+                        <td><?= $sql['id'] ?></td>
+                        <td><?= $sql['filial'] ?></td>
+                        <td><?= $sql['cnpj'] ?></td>
+                        <td><?= $sql['endereco'] ?></td>
+                        <td><?= $sql['telefone'] ?></td>                        
+                        <td><a href="/admin/editar/secao/<?= $view_secao ?>/id/<?= $sql['id'] ?>">Editar</a></td>
+                        <td><a href="/admin/deletar/secao/<?= $view_secao ?>/id/<?= $sql['id'] ?>"
+                               onclick="return confirm('Confirma a exclusão do registro?')">Deletar</a></td>   
+                    </tr>
+                    <?php
+                endforeach;
+                break;
+            case "suportes":
+                ?> 
+                <thead style="text-align: center">
+                <th>Id</th>
+                <th>Área de suporte</th> 
+                <th>Editar</th>
+                <th>Deletar</th>                    
+                </thead>
+                <?php foreach ($view_sql as $sql): ?>
+                    <tr>
+                        <td><?= $sql['id'] ?></td>
+                        <td><?= $sql['area'] ?></td>                    
+                        <td><a href="/admin/editar/secao/<?= $view_secao ?>/id/<?= $sql['id'] ?>">Editar</a></td>
+                        <td><a href="/admin/deletar/secao/<?= $view_secao ?>/id/<?= $sql['id'] ?>"
+                               onclick="return confirm('Confirma a exclusão do registro?')">Deletar</a></td>   
+                    </tr>
+                    <?php
+                endforeach;
+                break;
+            case "servicos":
+                ?> 
+                <thead style="text-align: center">
+                <th>Id</th>
+                <th>Serviço (tipo)</th>                
+                <th>Editar</th>
+                <th>Deletar</th>                    
+                </thead>
+                <?php foreach ($view_sql as $sql): ?>
+                    <tr>
+                        <td><?= $sql['id'] ?></td>
+                        <td><?= $sql['servico'] ?></td>                        
+                        <td><a href="/admin/editar/secao/<?= $view_secao ?>/id/<?= $sql['id'] ?>">Editar</a></td>
+                        <td><a href="/admin/deletar/secao/<?= $view_secao ?>/id/<?= $sql['id'] ?>"
+                               onclick="return confirm('Confirma a exclusão do registro?')">Deletar</a></td>   
+                    </tr>
+                    <?php
+                endforeach;
+                break;
+            case "funcionarios":
+                ?>                 
+                <thead style="text-align: center">
+                <th>Id</th>
+                <th>Funcionário</th>
+                <th>Função</th>  
+                <th>email</th>  
+                <th>Afastamento</th>               
+                <th>Data Afast.</th>
+                <th>Retorno</th> 
+                <th>Motivo</th>
+                <th>Áreas</th>
+                <th>Filiais</th>                 
+                <th>Editar</th>
+                <th>Deletar</th>                    
+                </thead>
+                <?php foreach ($view_sql as $sql): ?>
+                    <tr>
+                        <td><?= $sql['id'] ?></td>
+                        <td><?= $sql['nome'] ?></td>
+                        <td><?= $sql['funcao'] ?></td>  
+                        <td><?= $sql['email'] ?></td>  
+                        <td><?= $sql['afastamento'] ?></td>                       
+                        <td><?= date("d/m/Y", strtotime($sql['data_afastamento'])) ?></td>
+                        <td><?= date("d/m/Y", strtotime($sql['data_retorno'])) ?></td> 
+                        <td><?= $sql['motivo_afastamento'] ?></td>
+                        <td><?= $sql['suportes'] ?></td>
+                        <td><?= $sql['filiais'] ?></td>
+                        <td><a href="/admin/editar/secao/<?= $view_secao ?>/id/<?= $sql['id'] ?>">Editar</a></td>
+                        <td><a href="/admin/deletar/secao/<?= $view_secao ?>/id/<?= $sql['id'] ?>"
+                               onclick="return confirm('Confirma a exclusão do registro?')">Deletar</a></td>  
+                    </tr>
+
+                    <?php
+                endforeach;
+                break;
+            case "usuarios":
+                ?>
+                <thead style="text-align: center">
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Login</th>                  
+                <th>Nivel</th>
+                <th>Status</th>
+                <th>Editar</th>
+                <th>Deletar</th>                    
+                </thead>
+                <?php foreach ($view_sql as $sql): ?>
+                    <tr>
+                        <td><?= $sql['id'] ?></td>
+                        <td><?= $sql['nome'] ?></td>
+                        <td><?= $sql['login'] ?></td>                        
+                        <td><?= $sql['nivel'] ?></td>                          
+                        <td><?= $sql['status'] ?></td>
+                        <td><a href="/admin/editar/secao/<?= $view_secao ?>/id/<?= $sql['id'] ?>">Editar</a></td>
+                        <td><a href="/admin/deletar/secao/<?= $view_secao ?>/id/<?= $sql['id'] ?>"
+                               onclick="return confirm('Confirma a exclusão do registro?')">Deletar</a></td>                    
+                    </tr>
+                    <?php
+                endforeach;
+        endswitch;
+        ?>              
+    </table> 
+    <p><a href="/admin/cadastros/">Voltar</a></p>
+</article>

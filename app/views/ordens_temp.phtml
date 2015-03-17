@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>////// Protocolo n.º <?= $_POST['ordem'] ?> gerado ////// </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <?php
+        $css = "
+        <style>
+            img {width: 100%; }
+            /*table td {border-bottom: solid 1px green;}*/
+            .esq {text-align: left;}
+        </style>
+        ";
+        echo $css;
+        ?>
+    </head>
+    <body>
+        <?php
+        $html = "
+        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">
+        <img src='/web_files/imagens/logo.png' />
+
+        <table id='corpo'>
+            <tr>
+                <td><span>N.º de ordem: </span></td>
+                <td class='esq'> " . $_POST['ordem'] . "</td>                    
+            </tr>
+           <tr>
+                <td><span>Data de entrega: </span></td>
+                <td>" . date('d/m/Y', strtotime($_POST['data_suporte'])) . "</td>
+            </tr> 
+            <tr>
+                <td><span>Suporte a ser realizado: </span></td>
+                <td>" . $_POST['resumo'] . "</td>
+            </tr> 
+            <tr>
+            <tr>
+                <td><span>Filial: </span></td> 
+                <td>" . $_POST['filiais_nome'] . "</td>
+            </tr>
+              <tr>
+                <td><span>Endereço da filial: </span></td> 
+                <td>" . $_POST['filiais_endereco'] . "</td>
+            </tr>
+            <tr>
+                <td><span>Tipo de Suporte:</span></td>  
+                <td>" . $_POST['suportes_nome'] . "</td>
+            </tr>   
+               <tr>
+                <td><span>Serviço a realizar:</span></td>  
+                <td>" . $_POST['servicos_nome'] . "</td>
+            </tr>
+            <tr>
+                <td><span>Funcionário: </span></td>     
+                <td>" . $view_nome_funcionario['nome'] . "</td>
+            </tr>        
+            <tr>  
+                <td><span>Devolução: </span></td>
+                <td> ...../...../.....</td>
+            </tr>
+            <tr>
+                <td width=50%>
+                    <p style='text-align:center'>__________________________<br>
+                        Funcionário(a): " . $view_nome_funcionario['nome'] . "</p>
+                </td>
+                <td width=50%>
+                    <p style='text-align:center'>__________________________<br>
+                        " . $_SESSION['userData']['funcao'] . ": " . $_SESSION['userData']['nome'] . "</p>
+                </td>
+            </tr>            
+    </table>";
+        echo $html
+        . "
+<br>
+<hr>
+<br>
+" . $html;
+        $fp = fopen("web_files/ordens/" . substr($_POST['ordem'], 0, -5) . ".html", "w");
+
+// Escreve no arquivo duas vezes, uma fica ou vai para o oficial
+        $escreve = fwrite($fp, $css . $html . "<br><hr><br>");
+        $escreve2 = fwrite($fp, $html);
+
+// Fecha o arquivo
+        fclose($fp);
+        ?>
+        <p>
+        <ul>
+            <li><a href='/admin/ordens/'>Voltar</a></li>
+            <li><a href="#" onclick="window.print();
+                    return false;">Imprimir</a></li>
+        </ul> 
+    </p>   
+</body>
+</html>

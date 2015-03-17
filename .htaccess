@@ -1,0 +1,8 @@
+RewriteEngine On
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1
+
+# Forçando download
+AddType application/octet-stream .doc .txt .zip .pdf .xls .mp4 .srt .torrent
+

@@ -1,0 +1,88 @@
+<article>
+    <h1>Livro de protocolos</h1>
+    <p>
+    <ul>
+        <li><a href="/admin/livro_protocolos/tipo/pordia/">Protocolos por dia</a></li>
+        <li><a href="/admin/livro_protocolos/tipo/porintervalodedatas/">Protocolos por intervalo de datas</a></li>
+        <li><a href="/admin/livro_protocolos/tipo/pormes/">Protocolos por mês</a></li>
+        <li><a href="/admin/livro_protocolos/tipo/porano/">Protocolos por ano</a></li>
+    </ul>
+</p>
+
+<form action="" method="POST">       
+    <?php
+    switch ($view_tipo):
+        case 'pordia';
+            ?>                
+            <h3>Protocolos por data</h3>
+            <p>Insira a data:<br />
+                <input type="text" class="calendario" name="porDia" value="<?php echo ($_POST['porDia'] != null) ? $_POST['porDia'] : ""; ?>"> [Use o calendário!!]
+            </p>
+            <?php
+            break;
+        case 'porintervalodedatas':
+            ?>
+            <h3>Protocolos por intervalos de data</h3>
+            <p>Insira a data inicial:<br />
+                <input type="text" class="calendario" name="dataInicial" value="<?php echo ($_POST['dataInicial'] != null) ? $_POST['dataInicial'] : ""; ?>"> [Use o calendário!!]</p>
+            <p>Insira a data final:<br />
+                <input type="text" class="calendario" name="dataFinal" value="<?php echo ($_POST['dataFinal'] != null) ? $_POST['dataFinal'] : ""; ?>"> [Use o calendário!!]</p>
+            <?php
+            break;
+        case 'pormes':
+            ?>
+            <h3>Protocolos por mês</h3>               
+            <p>Insira o mês desejado: <br /> 
+                <input type="text" name="mes" value="<?php echo ($_POST['mes'] != null) ? $_POST['mes'] : ""; ?>">[Exemplo: março: 03, outubro: 10]</p>
+            <p>Insira o ano: <br />
+                <input type="text" name="mesAno" value="<?php echo ($_POST['mesAno'] != null) ? $_POST['mesAno'] : ""; ?>"></p>   
+            <?php
+            break;
+        case 'porano':
+            ?>
+            <h3>Protocolos por ano</h3>
+            <p>Insira o ano: <br />
+                <input type="text" name="ano" value="<?php echo ($_POST['ano'] != null) ? $_POST['ano'] : ""; ?>">  [Formato: 2013]</p> 
+            <?php
+            break;
+            ?>            
+    <?php endswitch; ?>  
+    <?php if ($view_tipo): ?> 
+        <input type="submit" value="Gerar" name="gerar">
+    <?php endif; ?> 
+
+</form>
+<?php if (@$_POST['gerar']): ?>
+    <table class="myTable" border="1">
+        <caption><h3>Últimas ordens de serviço expedidas</h3></caption>
+        <thead>
+        <th>Ordem</th>        
+        <th>Data de entrega</th>
+        <th>Área do suporte</th>
+        <th>Setor atendido</th>
+        <th>Tipo de Serviço</th>
+        <th>Funcionário</th>
+        <th>Filial atendida</th>
+        <th>Baixa</th>
+        <th>Baixar</th>               
+        </thead>
+        <?php foreach ($view_sql as $dados): ?>
+            <tr>
+                <td><?= $dados['id'] ?></td>              
+                <td><?= date('d/m/Y', strtotime($dados['data_suporte'])) ?></td>
+                <td><?= $dados['area'] ?></td>
+                <td><?= $dados['setor'] ?></td>
+                <td><?= $dados['servico'] ?></td>
+                <td><?= $dados['nome_func'] ?></td>
+                <td><?= $dados['filial'] ?></td>
+                <td><?= $dados['baixa_suporte'] ?></td>
+                <td><a href="/admin/livro_baixas/id/<?= $dados['id'] ?>">Clique aqui</a></td>   
+
+            </tr>
+        <?php endforeach; ?>
+    </table>         
+
+<?php endif; ?>
+
+
+</article>

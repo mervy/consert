@@ -1,0 +1,119 @@
+<article>
+    <h1>Controle físico das ordens de serviços geradas</h1>
+    <p>
+    <ul>
+        <li><a href="/admin/livro_controle/tipo/pordia/">Assinaturas por dia</a></li>
+        <li><a href="/admin/livro_controle/tipo/porintervalodedatas/">Assinaturas por intervalo de datas</a></li>
+        <li><a href="/admin/livro_controle/tipo/pormes/">Assinaturas por mês</a></li>
+        <li><a href="/admin/livro_controle/tipo/porano/">Assinaturas por ano</a></li>
+    </ul>
+</p>
+
+<form action="" method="POST">       
+    <?php
+    switch ($view_tipo):
+        case 'pordia';
+            ?>                
+            <h3>Assinaturas por data</h3>
+            <p>Insira a data:<br />
+                <input type="text" class="calendario" name="porDia" value="<?php echo (@$_POST['porDia'] != null) ? @$_POST['porDia'] : ""; ?>"> [Use o calendário!!]
+            </p>
+            <?php
+            break;
+        case 'porintervalodedatas':
+            ?>
+            <h3>Assinaturas por intervalos de data</h3>
+            <p>Insira a data inicial:<br />
+                <input type="text" class="calendario" name="dataInicial" value="<?php echo (@$_POST['dataInicial'] != null) ? @$_POST['dataInicial'] : ""; ?>"> [Use o calendário!!]</p>
+            <p>Insira a data final:<br />
+                <input type="text" class="calendario" name="dataFinal" value="<?php echo (@$_POST['dataFinal'] != null) ? @$_POST['dataFinal'] : ""; ?>"> [Use o calendário!!]</p>
+                <?php
+                break;
+            case 'pormes':
+                ?>
+            <h3>Assinaturas por mês</h3>               
+            <p>Insira o mês desejado: <br /> 
+                <input type="text" name="mes" value="<?php echo (@$_POST['mes'] != null) ? @$_POST['mes'] : ""; ?>">[Exemplo: 09 (para setembro), 10 (para outubro)</p>
+            <p>Insira o ano: <br />
+                <input type="text" name="mesAno" value="<?php echo (@$_POST['mesAno'] != null) ? @$_POST['mesAno'] : ""; ?>"></p>   
+            <?php
+            break;
+        case 'porano':
+            ?>
+            <h3>Assinaturas por ano</h3>
+            <p>Insira o ano: <br />
+                <input type="text" name="ano" value="<?php echo (@$_POST['ano'] != null) ? @$_POST['ano'] : ""; ?>">  [Formato: 2013]</p> 
+            <?php
+            break;
+            ?>            
+    <?php endswitch; ?>  
+    <?php if ($view_tipo): ?> 
+        <input type="submit" value="Gerar" name="livros">
+    <?php endif; ?> 
+
+</form>    
+<?php
+if (@@$_POST['livros']) {    
+    echo "
+<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">
+<p><a href='/web_files/livrotmp.html' target='_blank'>Imprimir livro</a></p>";
+    $livro = "<p>-----------------------------------------------------------------------------------------------</p>";
+    
+    foreach ($view_sql as $prot):
+        
+        $livro .=' 
+          <table style="width:640px">
+            <tbody>
+                <tr>
+                    <td>N.º de ordem:</td>
+                    <td>' . $prot['id'] . '/'. date("Y", strtotime($prot['data_suporte'])) .'</td>
+                    <td>Data do suporte:</td>
+                    <td>' . date("d/m/Y", strtotime($prot['data_suporte'])) . '</td>
+                </tr>
+                <tr>
+                    <td>Funcionário:</td>
+                    <td>' . $prot['nome_func'] . '</td>
+                    <td>Área de suporte:</td>
+                    <td>' . $prot['area'] . '</td>
+                </tr>
+                <tr>
+                    <td>Serviço:</td>
+                    <td>' . $prot['servico'] . '</td>
+                    <td>Setor:</td>
+                    <td>' . ucfirst(strtolower($prot['setor'])) . '</td>
+                </tr>
+                <tr>
+                    <td>Filial:</td>
+                    <td>' . $prot['filial'] . '</td>
+                     
+                </tr>
+                <tr>
+                    <td>Realização do suporte:</td>
+                    <td>....../....../......</td>
+                    <td>Ass.:</td>
+                    <td>....................</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>-----------------------------------------------------------------------------------------------</p>';
+    endforeach;
+}
+echo @$livro;
+$css = '
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style>
+    * {padding: 0 auto; margin: 0 auto;
+     font-family: arial;}    
+    p {text-align: center; }
+    /*table td {width: 160px;}*/
+    td:nth-child(even) {width: 180px;}
+    td:nth-child(odd) {width: 140px;}
+    tr {height: 10px; font-size: 10px}   
+</style>    
+';
+$fp = fopen("web_files/livrotmp.html", "w");
+$escreve = fwrite($fp, $css . @$livro);
+fclose($fp);
+?>
+
+</article>

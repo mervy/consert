@@ -1,0 +1,104 @@
+<article>   
+    <?php
+    switch ($view_secao) {
+        case 'setores':
+            ?>
+            <p>Inserindo dados de <?= $view_secao ?></p>
+            <form class="opcoes" action='/admin/cadastrar/secao/<?= $view_secao ?>/do/action' method="POST">
+                <p><label>Setor: </label><input type="text" name="setor" value="" size="70"/></p>                
+                <p style="text-align: right"><input type="submit" value='Cadastrar' name="inserir" /></p>
+            </form>  
+            <?php
+            break;
+        case 'filiais':
+            ?>
+            <p>Inserindo dados de <?= $view_secao ?></p>
+            <form class="opcoes" action='/admin/cadastrar/secao/<?= $view_secao ?>/do/action' method="POST">
+                <p><label>Filial: </label><input type="text" name="filial" value="" size="70"/></p>                
+                <p><label>CNPJ: </label><input type="text" name="cnpj" value="" size="40" id="cnpj"/></p> 
+                <p><label>Endereço: </label><br /><textarea name="endereco" rows="5" cols="50"></textarea></p>
+                <p><label>Telefone: </label><input type="text" name="telefone" value="" size="40" id="telefone"/></p> 
+                <p style="text-align: right"><input type="submit" value='Cadastrar' name="inserir" /></p>
+            </form>  
+            <?php
+            break;
+        case 'suportes':
+            ?>
+            <p>Inserindo dados de <?= $view_secao ?></p>
+            <form class="opcoes" action='/admin/cadastrar/secao/<?= $view_secao ?>/do/action' method="POST">
+                <p><label>Area de suporte: </label><input type="text" name="area" value="" size="70"/></p>                
+                <p style="text-align: right"><input type="submit" value='Cadastrar' name="inserir" /></p>
+            </form>  
+            <?php
+            break;
+        case 'servicos':
+            ?>
+            <p>Inserindo dados de <?= $view_secao ?></p>
+            <form class="opcoes" action='/admin/cadastrar/secao/<?= $view_secao ?>/do/action' method="POST">
+                <p><label>Serviço: </label><input type="text" name="servico" value="" size="70"/></p>                
+                <p style="text-align: right"><input type="submit" value='Cadastrar' name="inserir" /></p>
+            </form>  
+            <?php
+            break;
+        case 'funcionarios':
+            ?>
+            <p>Inserindo dados de <?= $view_secao ?></p>
+            <form class="opcoes" action='/admin/cadastrar/secao/<?= ($view_secao) ?>/do/action' method="POST">
+                <p><label>Nome: </label><input type="text" name="nome" size="70"/></p>
+                <p><label>Função: </label><input type="text" name="funcao" size="70"/></p>
+                <p><label>Email: </label><input type="text" name="email" size="50"/></p>
+                <p><label>Áreas de suporte: </label><input type="text" name="areas" value="Hardware,Rede,Software" size="50"/></p>
+                <p><label>Filiais que atua: </label><input type="text" name="filiais" value="1,2,3,4,5" size="50"/>
+                <div id='mostrada'>
+                    <a href='#'>[Inserir como: 1,2,3,4,5]</a>
+                    <div id="sera-mostrada">
+                       <pre>
+1 - Filial 01 - Super Alli Saldanha
+2 - Filial 02 - Super Alli XV de Novembro
+3 - Filial 03 - Super Alli Aeroporto
+4 - Filial 04 - Super Alli Palmeirinha
+5 - Filial 05 - Super Alli Entre Rios
+                       </pre>
+                   </div>
+                </div>                
+                </p>               
+                <p><label>Afastamento: </label>    
+                    <input name="afastamento" type="radio" value="Sim">Sim
+                    <input name="afastamento" type="radio" value="Não" checked>Não   
+                </p>
+                <p><label>Motivo do afastamento: </label><input type="text" name="motivo_afastamento" size="50"/></p>
+                <p><label>Data do afastamento: </label><input type="text" class="calendario data" name="data_afastamento"/>
+                    [Use o calendário!!]</p>
+                <p><label>Data do retorno: </label><input type="text" class="calendario data" name="data_retorno"/> 
+                    [Use o calendário!!]</p>
+                <p style="text-align: right"><input type="submit" value='Cadastrar' name="inserir" /></p>
+            </form>  
+            <?php
+            break;
+        case 'usuarios':
+            ?>            
+            <p>Inserindo novos <?= ucfirst($view_secao) ?></p>
+            <form class="opcoes" action='/admin/cadastrar/secao/<?= ($view_secao) ?>/do/action' method="POST">
+                <p><label>Login: </label><input type="text" name="login" size="40"/></p>
+                <p><label>Nome: </label><input type="text" name="nome" size="70"/></p>
+                <p><label>Funcao: </label><input type="text" name="funcao" size="70"/></p>
+                <p><label>Senha:</label><input type="text" name="senha" size="50"/></p>
+                <p><label>Nível: </label>    
+                    <input name="nivel" type="radio" value="1" checked>1 (um) - Básico
+                    <input name="nivel" type="radio" value="2" >2 (dois) - Intermediário
+                    <input name="nivel" type="radio" value="3" >3 (três) - Avançado                    
+                </p>
+                <p><label>Status: </label>    
+                    <input name="status" type="radio" value="ativo" checked>Ativo
+                    <input name="status" type="radio" value="inativo">Inativo                                       
+                </p>                
+                <input type="hidden" name="data" value="<?= date("Y-m-d") ?>"/>               
+                <p style="text-align: right"><input type="submit" value='Cadastrar' name="inserir" /></p>
+            </form>    
+
+            <?php
+            break;
+    }
+    ?>
+</article>
+

@@ -1,0 +1,89 @@
+<article>
+    <h1>Emitindo novas ordens de serviço</h1>
+
+    <?php if (!isset($view_filial) || $view_filial == null): ?>
+        <p>Escolha a filial:</p>
+        <ul>
+            <?php foreach ($view_filiais as $f): ?>
+                <li><a href="/admin/ordens/filial/<?= $f['filial'] ?>/"><?= $f['filial'] ?></a></li>
+            <?php endforeach; ?>
+        </ul>
+    <?php elseif (!isset($view_setor) || $view_setor == null): ?>
+        <p>Escolha o Setor:</p>
+        <ul>
+            <?php foreach ($view_setores as $s): ?>
+                <li><a href="/admin/ordens/filial/<?= $view_filial ?>/setor/<?= $s['setor'] ?>"><?= $s['setor'] ?></a></li>           
+            <?php endforeach; ?>
+        </ul>
+
+    <?php elseif (!isset($view_suporte) || $view_suporte == null): ?>
+        <p>Escolha o tipo de Suporte:</p>
+        <ul>
+            <?php foreach ($view_suportes as $sp): ?>
+                <li><a href="/admin/ordens/filial/<?= $view_filial ?>/setor/<?= $view_setor ?>/suporte/<?= $sp['area'] ?>"><?= $sp['area'] ?></a></li>           
+            <?php endforeach; ?>  
+        </ul>
+
+    <?php elseif (!isset($view_servico) || $view_servico == null): ?>
+        <p>Escolha o tipo de Serviço:</p>
+        <ul>
+            <?php foreach ($view_servicos as $sv): ?>
+                <li><a href="/admin/ordens/filial/<?= $view_filial ?>/setor/<?= $view_setor ?>/suporte/<?= $view_suporte ?>/servico/<?= $sv['servico'] ?>"><?= $sv['servico'] ?></a></li>           
+            <?php endforeach; ?>    
+        </ul>
+    <?php else: ?>
+        <p>Último funcionário: <span style="color:red; font-weight: bold"><?= ($view_ultimo_funcionario['nome_func'] != NULL) ? $view_ultimo_funcionario['nome_func'] : "Nenhum funcionário escolhido"; ?></span></p>
+
+        <form id="formOrdens" action="/admin/ordens/filial/<?= $view_filial ?>/setor/<?= $view_setor ?>/suporte/<?= $view_suporte ?>/servico/<?= $view_servico ?>/do/action/" method="POST">
+            <table id="protocolos">
+                <tr colspan="">
+                    <td>Ordem: </td>
+                    <td><input type="text" name="ordem" value="<?= ($view_ordem['id'] + 1) . '/' . date('Y') ?>" readonly="true" /></td>
+                </tr>  
+                <tr rowspan="4">
+                    <td>Data da Ordem: </td> 
+                    <td><input type="text" name="data_suporte" value="<?= date("d-m-Y") ?>" readonly="true" /></td>                     
+                </tr>                
+                <tr>
+                    <td>Resumo do serviço:</td>
+                    <td><textarea class="obrigatorio" name="resumo" rows="7" cols="60"><?php //echo ($_POST['resumo'] != null) ? $_POST['resumo'] : ""      ?></textarea></td>
+                </tr>
+                <tr>
+                    <td>Funcionário: </td> <td>
+                        <select class="obrigatorio" name='funcionarios_id'>  
+                            <option size="30">Selecione o funcionário</option>
+                            <?php foreach ($view_funcionarios as $func): ?>
+                                <option size="30" value="<?= $func['id'] ?>"><?= $func['nome'] . "\n" ?>
+                                <?php endforeach; ?>
+                        </select>                    
+                    </td>
+                </tr>  
+                <tr>
+                    <td>Filial: </td>
+                    <td><input type="text" name="filiais_nome" value="<?= $view_filial ?>" size="50" readonly="true" /></td>
+                <input type="hidden" name="filiais_id" value="<?= $view_filiais_id['id'] ?>" />
+                <input type="hidden" name="filiais_endereco" value="<?= $view_filiais_id['endereco'] ?>" />
+                </tr>  
+                <tr>
+                    <td>Setor: </td>
+                    <td><input type="text" name="setores_nome" value="<?= $view_setor ?>" size="50" readonly="true" /></td>
+                <input type="hidden" name="setores_id" value="<?= $view_setores_id['id'] ?>" />
+                </tr>  
+                <tr>
+                    <td>Área de suporte: </td>
+                    <td><input type="text" name="suportes_nome" value="<?= $view_suporte ?>" size="50" readonly="true" /></td>
+                <input type="hidden" name="suportes_id" value="<?= $view_suportes_id['id'] ?>" />
+                </tr>
+                <tr>
+                    <td>Serviço a realizar: </td>
+                    <td><input type="text" name="servicos_nome" value="<?= $view_servico ?>" size="50" readonly="true" /></td>
+                <input type="hidden" name="servicos_id" value="<?= $view_servicos_id['id'] ?>" />
+                </tr>             
+                <tr>
+                    <td colspan="2" id="submit"><input type="submit" name="submit" value="Emitir ordem" /></td>
+                </tr>
+                <input type="hidden" name="usuario" value="<?= $_SESSION['userData']['nome'] ?>" />
+            </table>
+        </form>
+    <?php endif; ?>
+</article>
