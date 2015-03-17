@@ -9,16 +9,16 @@ class Model {
         switch ($tipo) {
             case "local":
                 $this->user = 'root';
-                $this->pass = 'Master,-';
+                $this->pass = '';
                 $this->host = 'localhost';
                 $this->dbname = 'conserti';
                 return $this;
                 break;
             case "remoto":
-                $this->user = 'mervy578_mervy';
-                $this->pass = 'NX56/-+p98.)';
-                $this->host = 'localhost';
-                $this->dbname = 'mervy578_tcc_conserti';          
+                $this->user = '';
+                $this->pass = '';
+                $this->host = '';
+                $this->dbname = '';          
                 break;
         }
     }
